@@ -126,13 +126,14 @@ struct HarmonicBalanceProblem
     harmonics::Int
     n_fields::Int
     mkpdes::Function
+    params::Any
 end
 
 
 function harmonic_balance(hbp::HarmonicBalanceProblem)
     var_names, var_exprs, fields = create_ansatz(hbp.coords, hbp.t, hbp.omega, hbp.harmonics, hbp.n_fields)
 
-    pdes = hbp.mkpdes(fields...)
+    pdes = hbp.mkpdes(hbp.params, fields...)
     
     equations = []
 

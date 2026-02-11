@@ -14,8 +14,11 @@ const Dt = Differential(t);
 const Dx = Differential(x);
 const Dy = Differential(y);
 
-function mkpdes(u)
+function mkpdes(params, u)
+    (gamma, omega, gamma3, A_forcing, lambda_forcing, x, y, t, Dt, Dx, Dy) = params
     [Dt(Dt(u)) - 0.25*(Dx(Dx(u)) + Dy(Dy(u))) + gamma*Dt(u) + gamma3*Dt(u)*Dt(u)*Dt(u) - A_forcing * exp(lambda_forcing*(x/10.0)^2) * sin(omega * t)]
 end
 
-harmonic_balance(HarmonicBalanceProblem((x, y), t, omega, harmonics, 1, mkpdes)) |> println
+params = (gamma, omega, gamma3, A_forcing, lambda_forcing, x, y, t, Dt, Dx, Dy)
+
+harmonic_balance(HarmonicBalanceProblem((x, y), t, omega, harmonics, 1, mkpdes, params)) |> println
