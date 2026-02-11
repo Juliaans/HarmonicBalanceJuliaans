@@ -45,7 +45,7 @@ function create_ansatz(coords::Tuple, t::Symbolics.Num, omega, harmonics::Int, n
         push!(fields, u)
     end
     
-    return fields
+    return var_names, var_exprs, fields
 end
 
 function expand_trig_jl(eqn, t, omega)
@@ -124,15 +124,19 @@ struct HarmonicBalanceProblem
     t::Symbolics.Num
     omega::Float64
     harmonics::Int
-    pdes::Vector{Any}
+    n_fields::Int
+    mkpdes::Function
 end
 
 
 function harmonic_balance(hbp::HarmonicBalanceProblem)
+    var_names, var_exprs, fields = create_ansatz(hbp.coords, hbp.t, hbp.omega, hbp.harmonics, hbp.n_fields)
 
+    pdes = hbp.mkpdes(fields..)
+    
     equations = []
 
-    for pde in hbp.pdes
+    for pde in pdes
         expanded = expand_trig_jl(pde, hbp.t, hbp.omega)
         eqns = make_equations(expanded, hbp.harmonics, hbp.omega, hbp.t)
         append!(equations, eqns)
