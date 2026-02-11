@@ -132,7 +132,7 @@ end
 function harmonic_balance(hbp::HarmonicBalanceProblem)
     var_names, var_exprs, fields = create_ansatz(hbp.coords, hbp.t, hbp.omega, hbp.harmonics, hbp.n_fields)
 
-    pdes = hbp.mkpdes(fields..)
+    pdes = hbp.mkpdes(fields...)
     
     equations = []
 
@@ -142,5 +142,5 @@ function harmonic_balance(hbp::HarmonicBalanceProblem)
         append!(equations, eqns)
     end
 
-    return equations
+    return var_names, var_exprs, equations
 end
