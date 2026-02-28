@@ -1,6 +1,6 @@
 include("../src/symbolics/symbolics.jl")
 include("../src/discretizer/fd_discretize.jl")
-include("../src/residual/fd_discretize.jl")
+include("../src/residual/residual.jl")
 
 const γ = 0.0;
 const ω = 1.0;
@@ -24,4 +24,4 @@ params = (γ, ω, γ₃, A_forcing, λ_forcing, x, y, t, Dt, Dx, Dy)
 
 var_names, var_exprs, equations = HarmonicBalanceProblem((x, y), t, ω, harmonics, 1, mkpdes, params) |> harmonic_balance
 quote_expr = transform_sym(equations)
-println(quote_expr)
+residual = create_residual_function(10, quote_expr, harmonics)
