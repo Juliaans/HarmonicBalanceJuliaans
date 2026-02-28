@@ -134,7 +134,7 @@ function harmonic_balance(hbp::HarmonicBalanceProblem)
 
     pdes = hbp.mkpdes(hbp.params, fields...)
     
-    equations = []
+    equations::Vector{Any} = []
 
     for pde in pdes
         expanded = expand_trig_jl(pde, hbp.t, hbp.omega)
@@ -144,3 +144,5 @@ function harmonic_balance(hbp::HarmonicBalanceProblem)
 
     return var_names, var_exprs, equations
 end
+
+
