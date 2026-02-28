@@ -1,7 +1,6 @@
 using MethodOfLines
 using NonlinearSolve
 import ModelingToolkit as Model
-import SymPy as sp
 import Symbolics as Symb
 using DomainSets
 import ApproxFun as AF
