@@ -23,5 +23,5 @@ end
 params = (γ, ω, γ₃, A_forcing, λ_forcing, x, y, t, Dt, Dx, Dy)
 
 var_names, var_exprs, equations = HarmonicBalanceProblem((x, y), t, ω, harmonics, 1, mkpdes, params) |> harmonic_balance
-quote_expr = transform_sym(equations)
-residual = create_residual_function(10, quote_expr, harmonics)
+quote_expr = transform_sym_2D(equations)
+residual = create_residual_function_2D(10, quote_expr, harmonics)
